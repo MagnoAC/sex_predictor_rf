@@ -39,7 +39,7 @@ def encode(target):
 
 
 #import data
-def main(filename):
+def main(input_file):
     missing_values = ["n/a","na","--", "NaN"] #list of possibles missing values
     data_raw = pd.read_csv(filename, sep =',', na_values = missing_values)
     data_fs = data_raw.copy()
