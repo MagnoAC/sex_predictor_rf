@@ -101,5 +101,5 @@ def main(input_file):
     result[['sex']] = y_pred
     result = result[['sex']]
     result[['sex']] = result['sex'].replace({0: 'F', 1: 'M'})
-    result('newsample.csv', index = False)
+    result('newsample_PREDICTIONS_{candidate_fullname}.csv', index = False)
 
