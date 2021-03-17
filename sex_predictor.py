@@ -23,14 +23,11 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.model_selection import cross_val_score
 import pickle
-
+import sys
+import argparse
 
 # In[2]:
 
-
-#Function Used to encoding [1]
-def encode(target):
-    return unique.tolist().index(target)
 
 
 # Data Import and Cleaning
@@ -80,7 +77,7 @@ def main(input_file):
     enco_data = data_fs.copy()
     unique = enco_data['sex'].unique()
     enco_data['sex'] = enco_data.sex.str.upper()
-    enco_data['sex'] = enco_data['sex'].apply(encode)
+    enco_data['sex'] = enco_data['sex'].apply(lambda x: unique.tolist().index(x))
     
     #Feature selection
     eda = enco_data.copy()
@@ -88,7 +85,7 @@ def main(input_file):
     
     #Outlier Removal
     df = eda.copy()
-    df = df[(np.abs(stats.zscore(df[['age'] + ['trestbps'] +['chol'] + ['oldpeak'] + ['thalach']] + ['trf']) < 2.2).all(axis=1))] #outlier removal
+    df = df[(np.abs(stats.zscore(df[['trestbps'] +['chol'] + ['oldpeak'] + ['thalach']]) < 2.2).all(axis=1))] #outlier removal
     
     #Separation of Target and Features
     X = df.iloc[:, df.columns != 'sex']  #independent columns
@@ -101,5 +98,11 @@ def main(input_file):
     result[['sex']] = y_pred
     result = result[['sex']]
     result[['sex']] = result['sex'].replace({0: 'F', 1: 'M'})
-    result('newsample_PREDICTIONS_{candidate_fullname}.csv', index = False)
+    result.to_csv('newsample_PREDICTIONS_{candidate_fullname}.csv', index = False)
+
+if __name__ == "__main__":	
+   input_file = sys.argv[2]
+   parent_subparser = argparse.ArgumentParser(add_help=False)
+   parent_subparser.add_argument("--input_file", required=True, help="csv file")
+   main(input_file)
 
