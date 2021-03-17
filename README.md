@@ -20,7 +20,7 @@ conda activate env
 ```
 4. run on your anaconda prompt: 
 ```
-pip install -r requirements.txt on anaconda prompt
+pip3 install -r requirements.txt on anaconda prompt
 ```
 # Code
 
