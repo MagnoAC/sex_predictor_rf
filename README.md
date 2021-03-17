@@ -35,6 +35,10 @@ The code used for analyse data and to create the Random forest model can be seen
 ```
 (env) python sex_predictor.py --input_file newsample.csv
 ```
+Obs: If accuse error of not having imblearn lib, run this command:
+```
+conda install -c glemaitre imbalanced-learn
+```
 
 # Data
 The patients data used to build the model contains 288 rows and 18 variables (17 features and 1 target variable)
